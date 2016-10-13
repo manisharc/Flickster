@@ -26,16 +26,22 @@ public class Movie {
         return String.format("https://image.tmdb.org/t/p/w342/%s",backdropPath);
     }
 
+    public float getVoteAverage() {
+        return voteAverage;
+    }
+
     String posterPath;
     String backdropPath;
     String originalTitle;
     String overview;
+    float voteAverage;
 
     public Movie (JSONObject jsonObject) throws JSONException{
         this.posterPath = jsonObject.getString("poster_path");
         this.originalTitle = jsonObject.getString("original_title");
         this.overview = jsonObject.getString("overview");
         this.backdropPath = jsonObject.getString("backdrop_path");
+        this.voteAverage = Float.parseFloat(jsonObject.getString("vote_average"));
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray array){
