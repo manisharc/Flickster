@@ -1,8 +1,11 @@
 package com.example.chmanish.flickster;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.chmanish.flickster.adapters.MovieArrayAdapter;
@@ -70,6 +73,20 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+
+
+        // On clicking a task, you can edit it
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(MovieActivity.this, MovieDetailsActivity.class);
+                Movie movie = movies.get(position);
+                // Sending the item details so that the next activity can populate the values
+                i.putExtra("movieDetails", movie);
+                startActivity(i);
+
             }
         });
     }
