@@ -35,12 +35,16 @@ public class Movie implements Serializable {
         return voteAverage;
     }
 
+    public String getId() {
+        return id;
+    }
     String posterPath;
     String backdropPath;
     String originalTitle;
     String overview;
     String releaseDate;
     float voteAverage;
+    String id;
 
     public Movie (JSONObject jsonObject) throws JSONException {
         this.posterPath = jsonObject.getString("poster_path");
@@ -49,6 +53,7 @@ public class Movie implements Serializable {
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.releaseDate = jsonObject.getString("release_date");
         this.voteAverage = Float.parseFloat(jsonObject.getString("vote_average"));
+        this.id = jsonObject.getString("id");
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray array){
