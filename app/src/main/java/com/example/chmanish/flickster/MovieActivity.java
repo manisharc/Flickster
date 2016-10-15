@@ -77,13 +77,12 @@ public class MovieActivity extends AppCompatActivity {
         });
 
 
-        // On clicking a task, you can edit it
+        // On clicking a movie, you can either see details or see the video
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MovieActivity.this, MovieDetailsActivity.class);
                 Movie movie = movies.get(position);
-                // Sending the item details so that the next activity can populate the values
                 i.putExtra("movieDetails", movie);
                 startActivity(i);
 

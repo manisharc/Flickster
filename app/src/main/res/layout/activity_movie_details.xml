@@ -52,7 +52,6 @@
         android:numStars="5"
         android:progressTint="#ff0000"
         android:secondaryProgressTint="@android:color/transparent"
-
         android:isIndicator="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

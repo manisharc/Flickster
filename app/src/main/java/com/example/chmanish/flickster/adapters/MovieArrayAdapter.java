@@ -29,6 +29,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         TextView title;
         TextView overview;
         ImageView image;
+        ImageView play;
     }
 
     private static class PopViewHolder {
@@ -102,6 +103,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 convertView = inflater.inflate(R.layout.item_movie, parent, false);
                 viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
                 viewHolder.overview = (TextView) convertView.findViewById(R.id.tvOverview);
+                viewHolder.play = (ImageView) convertView.findViewById(R.id.ivYoutubePlay);
                 viewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
                 // Cache the viewHolder object inside the fresh view
                 convertView.setTag(viewHolder);
@@ -120,6 +122,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder.overview.setText(movie.getOverview());
 
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                if (viewType == POPULAR_VIEW){
+                    viewHolder.play.setVisibility(View.VISIBLE);
+
+                }
                 Picasso.with(getContext()).load(movie.getBackdropPath())
                         .placeholder(R.drawable.placeholder)
                         .into(viewHolder.image);
