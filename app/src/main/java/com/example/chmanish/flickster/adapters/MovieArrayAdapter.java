@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 /**
  * Created by chmanish on 10/11/16.
  */
@@ -51,9 +53,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     // for the specified item.
     @Override
     public int getItemViewType(int position) {
-        // Return an integer here representing the type of View.
-        // Note: Integers must be in the range 0 to getViewTypeCount() - 1
-        //Get the data item for position
         Movie movie = getItem(position);
         if(movie.getVoteAverage() >= 5){
             return POPULAR_VIEW;
@@ -90,6 +89,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             // clear out the image from convertView
             popViewHolder.image.setImageResource(0);
             Picasso.with(getContext()).load(movie.getBackdropPath())
+                        .transform(new RoundedCornersTransformation(10, 10))
                         .placeholder(R.drawable.placeholder).into(popViewHolder.image);
         }
         else {
@@ -127,11 +127,13 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                 }
                 Picasso.with(getContext()).load(movie.getBackdropPath())
+                        .transform(new RoundedCornersTransformation(10, 10))
                         .placeholder(R.drawable.placeholder)
                         .into(viewHolder.image);
             }
             else {
                 Picasso.with(getContext()).load(movie.getPosterPath())
+                        .transform(new RoundedCornersTransformation(10, 10))
                         .placeholder(R.drawable.placeholder).into(viewHolder.image);
             }
 
