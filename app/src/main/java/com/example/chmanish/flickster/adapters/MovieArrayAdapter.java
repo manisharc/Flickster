@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
@@ -27,15 +29,23 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     private static int NOT_SO_POPULAR_VIEW = 1;
 
     // View lookup cache
-    private static class ViewHolder {
-        TextView title;
-        TextView overview;
-        ImageView image;
-        ImageView play;
+    static class ViewHolder {
+        @BindView(R.id.tvTitle) TextView title;
+        @BindView(R.id.tvOverview)TextView overview;
+        @BindView(R.id.ivMovieImage) ImageView image;
+        @BindView(R.id.ivYoutubePlay) ImageView play;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
-    private static class PopViewHolder {
-        ImageView image;
+    static class PopViewHolder {
+        @BindView(R.id.ivBackdropImage) ImageView image;
+
+        public PopViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
     public MovieArrayAdapter(Context context, List<Movie>movies){
@@ -73,10 +83,9 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             PopViewHolder popViewHolder;
             //check the existing view being reused
             if (convertView == null){
-                popViewHolder = new PopViewHolder();
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(R.layout.item_popular_movie, parent, false);
-                popViewHolder.image = (ImageView) convertView.findViewById(R.id.ivBackdropImage);
+                popViewHolder = new PopViewHolder(convertView);
                 // Cache the viewHolder object inside the fresh view
                 convertView.setTag(popViewHolder);
             }
@@ -98,13 +107,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
             //check the existing view being reused
             if (convertView == null){
-                viewHolder = new ViewHolder();
+
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(R.layout.item_movie, parent, false);
-                viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
-                viewHolder.overview = (TextView) convertView.findViewById(R.id.tvOverview);
-                viewHolder.play = (ImageView) convertView.findViewById(R.id.ivYoutubePlay);
-                viewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+                viewHolder = new ViewHolder(convertView);
                 // Cache the viewHolder object inside the fresh view
                 convertView.setTag(viewHolder);
             }

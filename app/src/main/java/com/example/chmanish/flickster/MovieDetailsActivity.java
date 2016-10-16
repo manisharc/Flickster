@@ -12,6 +12,9 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by chmanish on 10/12/16.
  */
@@ -20,6 +23,15 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
     private String apiKey;
     String youtubeKey;
     Movie movie;
+
+    //BindViews
+    @BindView(R.id.tvMovieName) TextView title;
+    @BindView(R.id.tvReleaseDate) TextView releaseDate;
+    @BindView(R.id.tvOverview) TextView overview;
+    @BindView(R.id.ratingBar) RatingBar ratingBar;
+    @BindView(R.id.player) YouTubePlayerView youTubePlayerView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +41,9 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
         apiKey = getString(R.string.youtube_api_key);
         if (movie.getVoteAverage() < 5){
             setContentView(R.layout.activity_movie_details);
-            TextView title = (TextView)findViewById(R.id.tvMovieName);
-            TextView releaseDate = (TextView)findViewById(R.id.tvReleaseDate);
-            RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
-            TextView overview = (TextView) findViewById(R.id.tvOverview);
+            ButterKnife.bind(this);
             title.setText(movie.getOriginalTitle());
             releaseDate.setText(String.format("Release Date: %s",movie.getReleaseDate()));
-
             float voteAverage = movie.getVoteAverage();
             voteAverage = voteAverage/2;
             Log.d("voteAverage", String.valueOf(voteAverage));
@@ -45,11 +53,9 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
         else {
 
             setContentView(R.layout.item_popular_video);
+            ButterKnife.bind(this);
 
         }
-        //Find the youtube key for that movie ID
-        YouTubePlayerView youTubePlayerView =
-                (YouTubePlayerView) findViewById(R.id.player);
 
         youTubePlayerView.initialize(apiKey,
                 new YouTubePlayer.OnInitializedListener() {
@@ -57,7 +63,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
                     public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                                         YouTubePlayer youTubePlayer, boolean b) {
 
-                        // do any work here to cue video, play video, etc.
+                        // cue video if it is not a popular movie
                         if (movie.getVoteAverage() < 5)
                             youTubePlayer.cueVideo(youtubeKey);
                         else {
