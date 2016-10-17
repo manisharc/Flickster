@@ -52,7 +52,7 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 // Refresh list of movies
-                fetchMoviesAsync(0);
+                fetchMoviesAsync(true);
             }
         });
         // Configure the refreshing colors
@@ -63,25 +63,7 @@ public class MovieActivity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get(url, new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray movieJsonResults = null;
-                try {
-                    movieJsonResults = response.getJSONArray("results");
-                    movies.addAll(Movie.fromJSONArray(movieJsonResults));
-                    movieAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-            }
-        });
-
+        fetchMoviesAsync(false);
 
         // On clicking a movie, you can either see details or see the video
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,7 +110,7 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
-    public void fetchMoviesAsync(int page) {
+    public void fetchMoviesAsync(final boolean isRefresh) {
         // Send the network request to fetch the updated data
         // `client` here is an instance of Android Async HTTP
         AsyncHttpClient client = new AsyncHttpClient();
@@ -141,7 +123,8 @@ public class MovieActivity extends AppCompatActivity {
                     movieJsonResults = response.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJsonResults));
                     movieAdapter.notifyDataSetChanged();
-                    swipeContainer.setRefreshing(false);
+                    if (isRefresh)
+                        swipeContainer.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
