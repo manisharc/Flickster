@@ -1,6 +1,7 @@
 package com.example.chmanish.flickster;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -25,10 +26,10 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
     Movie movie;
 
     //BindViews
-    @BindView(R.id.tvMovieName) TextView title;
-    @BindView(R.id.tvReleaseDate) TextView releaseDate;
-    @BindView(R.id.tvOverview) TextView overview;
-    @BindView(R.id.ratingBar) RatingBar ratingBar;
+    @Nullable @BindView(R.id.tvMovieName) TextView title;
+    @Nullable @BindView(R.id.tvReleaseDate) TextView releaseDate;
+    @Nullable @BindView(R.id.tvOverview) TextView overview;
+    @Nullable @BindView(R.id.ratingBar) RatingBar ratingBar;
     @BindView(R.id.player) YouTubePlayerView youTubePlayerView;
 
 
@@ -67,7 +68,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
                         if (movie.getVoteAverage() < 5)
                             youTubePlayer.cueVideo(youtubeKey);
                         else {
-                            //youTubePlayer.setFullscreen(true);
+                            youTubePlayer.setFullscreen(true);
                             youTubePlayer.loadVideo(youtubeKey);
                         }
 

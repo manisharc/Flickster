@@ -2,6 +2,7 @@ package com.example.chmanish.flickster.adapters;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         @BindView(R.id.tvTitle) TextView title;
         @BindView(R.id.tvOverview)TextView overview;
         @BindView(R.id.ivMovieImage) ImageView image;
-        @BindView(R.id.ivYoutubePlay) ImageView play;
+        @Nullable @BindView(R.id.ivYoutubePlay) ImageView play;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
