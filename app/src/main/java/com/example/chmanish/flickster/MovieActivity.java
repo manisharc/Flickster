@@ -28,6 +28,7 @@ public class MovieActivity extends AppCompatActivity {
     ArrayList<Movie> movies;
     MovieArrayAdapter  movieAdapter;
     String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+    String trailerUrl;
     private String trailerUrl1 = "https://api.themoviedb.org/3/movie/";
     private String trailerUrl2 = "/trailers?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
     String youtubeKey;
@@ -88,9 +89,9 @@ public class MovieActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Intent i = new Intent(MovieActivity.this, MovieDetailsActivity.class);
                 final Movie movie = movies.get(position);
-                url = String.format("%s%s%s",trailerUrl1,movie.getId(),trailerUrl2);
+                trailerUrl = String.format("%s%s%s",trailerUrl1,movie.getId(),trailerUrl2);
                 AsyncHttpClient client = new AsyncHttpClient();
-                client.get(url, new JsonHttpResponseHandler(){
+                client.get(trailerUrl, new JsonHttpResponseHandler(){
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         JSONArray trailerJsonResults = null;
